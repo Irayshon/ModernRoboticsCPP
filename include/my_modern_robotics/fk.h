@@ -10,10 +10,10 @@ class FK {
  public:
   /**
    * @brief Compute forward kinematics in the body frame.
-   * @param M Home configuration of the end-effector.
-   * @param Blist 6xn screw axes in the body frame.
-   * @param thetalist n-vector of joint angles.
-   * @return End-effector transform in SE(3).
+   * @param M Eigen::MatrixXd home configuration of the end-effector.
+   * @param Blist Eigen::MatrixXd 6xn screw axes in the body frame.
+   * @param thetalist Eigen::VectorXd n-vector of joint angles.
+   * @return Eigen::MatrixXd end-effector transform in SE(3).
    */
   static Eigen::MatrixXd FKinBody(const Eigen::MatrixXd& M,
                                   const Eigen::MatrixXd& Blist,
@@ -21,10 +21,10 @@ class FK {
 
   /**
    * @brief Compute forward kinematics in the space frame.
-   * @param M Home configuration of the end-effector.
-   * @param Slist 6xn screw axes in the space frame.
-   * @param thetalist n-vector of joint angles.
-   * @return End-effector transform in SE(3).
+   * @param M Eigen::MatrixXd home configuration of the end-effector.
+   * @param Slist Eigen::MatrixXd 6xn screw axes in the space frame.
+   * @param thetalist Eigen::VectorXd n-vector of joint angles.
+   * @return Eigen::MatrixXd end-effector transform in SE(3).
    */
   static Eigen::MatrixXd FKinSpace(const Eigen::MatrixXd& M,
                                    const Eigen::MatrixXd& Slist,

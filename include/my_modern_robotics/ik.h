@@ -10,13 +10,13 @@ class IK {
  public:
   /**
    * @brief Compute inverse kinematics in the body frame.
-   * @param Blist 6xn screw axes in the body frame.
-   * @param M Home configuration of the end-effector.
-   * @param T Desired end-effector configuration.
-   * @param thetalist Initial guess; updated with solution on success.
-   * @param eomg Orientation error tolerance.
-   * @param ev Position error tolerance.
-   * @return True if solution converged within tolerances.
+   * @param Blist Eigen::MatrixXd 6xn screw axes in the body frame.
+   * @param M Eigen::MatrixXd home configuration of the end-effector.
+   * @param T Eigen::MatrixXd desired end-effector configuration.
+   * @param thetalist Eigen::VectorXd initial guess; updated on success.
+   * @param eomg double orientation error tolerance.
+   * @param ev double position error tolerance.
+   * @return bool true if solution converged within tolerances.
    */
   static bool IKinBody(const Eigen::MatrixXd& Blist,
                        const Eigen::MatrixXd& M,
@@ -27,13 +27,13 @@ class IK {
 
   /**
    * @brief Compute inverse kinematics in the space frame.
-   * @param Slist 6xn screw axes in the space frame.
-   * @param M Home configuration of the end-effector.
-   * @param T Desired end-effector configuration.
-   * @param thetalist Initial guess; updated with solution on success.
-   * @param eomg Orientation error tolerance.
-   * @param ev Position error tolerance.
-   * @return True if solution converged within tolerances.
+   * @param Slist Eigen::MatrixXd 6xn screw axes in the space frame.
+   * @param M Eigen::MatrixXd home configuration of the end-effector.
+   * @param T Eigen::MatrixXd desired end-effector configuration.
+   * @param thetalist Eigen::VectorXd initial guess; updated on success.
+   * @param eomg double orientation error tolerance.
+   * @param ev double position error tolerance.
+   * @return bool true if solution converged within tolerances.
    */
   static bool IKinSpace(const Eigen::MatrixXd& Slist,
                         const Eigen::MatrixXd& M,

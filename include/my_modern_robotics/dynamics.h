@@ -11,11 +11,11 @@ class Dynamics {
  public:
   /**
    * @brief Compute the joint-space mass matrix.
-   * @param thetalist n-vector of joint angles.
-   * @param Mlist List of link frames {i} relative to {i-1} at home.
-   * @param Glist Spatial inertia matrices of the links.
-   * @param Slist 6xn screw axes in the space frame.
-   * @return n x n mass matrix.
+   * @param thetalist Eigen::VectorXd n-vector of joint angles.
+   * @param Mlist std::vector<Eigen::MatrixXd> link frames at home.
+   * @param Glist std::vector<Eigen::MatrixXd> spatial inertias.
+   * @param Slist Eigen::MatrixXd 6xn screw axes in the space frame.
+   * @return Eigen::MatrixXd n x n mass matrix.
    */
   static Eigen::MatrixXd MassMatrix(
       const Eigen::VectorXd& thetalist,
@@ -25,12 +25,12 @@ class Dynamics {
 
   /**
    * @brief Compute velocity quadratic forces (Coriolis/centripetal).
-   * @param thetalist n-vector of joint angles.
-   * @param dthetalist n-vector of joint velocities.
-   * @param Mlist List of link frames {i} relative to {i-1} at home.
-   * @param Glist Spatial inertia matrices of the links.
-   * @param Slist 6xn screw axes in the space frame.
-   * @return n-vector of joint forces/torques.
+   * @param thetalist Eigen::VectorXd n-vector of joint angles.
+   * @param dthetalist Eigen::VectorXd n-vector of joint velocities.
+   * @param Mlist std::vector<Eigen::MatrixXd> link frames at home.
+   * @param Glist std::vector<Eigen::MatrixXd> spatial inertias.
+   * @param Slist Eigen::MatrixXd 6xn screw axes in the space frame.
+   * @return Eigen::VectorXd n-vector of joint forces/torques.
    */
   static Eigen::VectorXd VelQuadraticForces(
       const Eigen::VectorXd& thetalist,
@@ -41,12 +41,12 @@ class Dynamics {
 
   /**
    * @brief Compute gravity forces at the joints.
-   * @param thetalist n-vector of joint angles.
-   * @param g Gravity vector.
-   * @param Mlist List of link frames {i} relative to {i-1} at home.
-   * @param Glist Spatial inertia matrices of the links.
-   * @param Slist 6xn screw axes in the space frame.
-   * @return n-vector of joint forces/torques.
+   * @param thetalist Eigen::VectorXd n-vector of joint angles.
+   * @param g Eigen::Vector3d gravity vector.
+   * @param Mlist std::vector<Eigen::MatrixXd> link frames at home.
+   * @param Glist std::vector<Eigen::MatrixXd> spatial inertias.
+   * @param Slist Eigen::MatrixXd 6xn screw axes in the space frame.
+   * @return Eigen::VectorXd n-vector of joint forces/torques.
    */
   static Eigen::VectorXd GravityForces(
       const Eigen::VectorXd& thetalist,
@@ -57,12 +57,12 @@ class Dynamics {
 
   /**
    * @brief Compute joint forces from an end-effector wrench.
-   * @param thetalist n-vector of joint angles.
-   * @param Ftip Spatial force applied at the end-effector.
-   * @param Mlist List of link frames {i} relative to {i-1} at home.
-   * @param Glist Spatial inertia matrices of the links.
-   * @param Slist 6xn screw axes in the space frame.
-   * @return n-vector of joint forces/torques.
+   * @param thetalist Eigen::VectorXd n-vector of joint angles.
+   * @param Ftip Eigen::VectorXd spatial force at the end-effector.
+   * @param Mlist std::vector<Eigen::MatrixXd> link frames at home.
+   * @param Glist std::vector<Eigen::MatrixXd> spatial inertias.
+   * @param Slist Eigen::MatrixXd 6xn screw axes in the space frame.
+   * @return Eigen::VectorXd n-vector of joint forces/torques.
    */
   static Eigen::VectorXd EndEffectorForces(
       const Eigen::VectorXd& thetalist,
@@ -73,15 +73,15 @@ class Dynamics {
 
   /**
    * @brief Compute forward dynamics (joint accelerations).
-   * @param thetalist n-vector of joint angles.
-   * @param dthetalist n-vector of joint velocities.
-   * @param taulist n-vector of joint forces/torques.
-   * @param g Gravity vector.
-   * @param Ftip Spatial force applied at the end-effector.
-   * @param Mlist List of link frames {i} relative to {i-1} at home.
-   * @param Glist Spatial inertia matrices of the links.
-   * @param Slist 6xn screw axes in the space frame.
-   * @return n-vector of joint accelerations.
+   * @param thetalist Eigen::VectorXd n-vector of joint angles.
+   * @param dthetalist Eigen::VectorXd n-vector of joint velocities.
+   * @param taulist Eigen::VectorXd n-vector of joint forces/torques.
+   * @param g Eigen::Vector3d gravity vector.
+   * @param Ftip Eigen::VectorXd spatial force at the end-effector.
+   * @param Mlist std::vector<Eigen::MatrixXd> link frames at home.
+   * @param Glist std::vector<Eigen::MatrixXd> spatial inertias.
+   * @param Slist Eigen::MatrixXd 6xn screw axes in the space frame.
+   * @return Eigen::VectorXd n-vector of joint accelerations.
    */
   static Eigen::VectorXd ForwardDynamics(
       const Eigen::VectorXd& thetalist,
@@ -95,11 +95,11 @@ class Dynamics {
 
   /**
    * @brief Integrate one Euler step for joint positions and velocities.
-   * @param thetalist n-vector of joint angles.
-   * @param dthetalist n-vector of joint velocities.
-   * @param ddthetalist n-vector of joint accelerations.
-   * @param dt Time step.
-   * @return Vector containing updated thetalist and dthetalist.
+   * @param thetalist Eigen::VectorXd n-vector of joint angles.
+   * @param dthetalist Eigen::VectorXd n-vector of joint velocities.
+   * @param ddthetalist Eigen::VectorXd n-vector of joint accelerations.
+   * @param dt double time step.
+   * @return std::vector<Eigen::VectorXd> updated theta and dtheta.
    */
   static std::vector<Eigen::VectorXd> EulerStep(
       const Eigen::VectorXd& thetalist,
@@ -109,15 +109,15 @@ class Dynamics {
 
   /**
    * @brief Compute inverse dynamics for a joint-space trajectory.
-   * @param thetamat Joint positions over time (rows).
-   * @param dthetamat Joint velocities over time (rows).
-   * @param ddthetamat Joint accelerations over time (rows).
-   * @param g Gravity vector.
-   * @param Ftipmat End-effector wrenches over time (rows).
-   * @param Mlist List of link frames {i} relative to {i-1} at home.
-   * @param Glist Spatial inertia matrices of the links.
-   * @param Slist 6xn screw axes in the space frame.
-   * @return Matrix of joint torques over time (rows).
+   * @param thetamat Eigen::MatrixXd joint positions (rows).
+   * @param dthetamat Eigen::MatrixXd joint velocities (rows).
+   * @param ddthetamat Eigen::MatrixXd joint accelerations (rows).
+   * @param g Eigen::Vector3d gravity vector.
+   * @param Ftipmat Eigen::MatrixXd end-effector wrenches (rows).
+   * @param Mlist std::vector<Eigen::MatrixXd> link frames at home.
+   * @param Glist std::vector<Eigen::MatrixXd> spatial inertias.
+   * @param Slist Eigen::MatrixXd 6xn screw axes in the space frame.
+   * @return Eigen::MatrixXd joint torques over time (rows).
    */
   static Eigen::MatrixXd InverseDynamicsTrajectory(
       const Eigen::MatrixXd& thetamat,
@@ -131,17 +131,17 @@ class Dynamics {
 
   /**
    * @brief Simulate forward dynamics over a joint torque trajectory.
-   * @param thetalist Initial joint angles.
-   * @param dthetalist Initial joint velocities.
-   * @param taumat Joint torque trajectory (rows).
-   * @param g Gravity vector.
-   * @param Ftipmat End-effector wrench trajectory (rows).
-   * @param Mlist List of link frames {i} relative to {i-1} at home.
-   * @param Glist Spatial inertia matrices of the links.
-   * @param Slist 6xn screw axes in the space frame.
-   * @param dt Time step between rows of taumat.
-   * @param intRes Integration resolution per time step.
-   * @return Vector of two matrices: joint positions and velocities (rows).
+   * @param thetalist Eigen::VectorXd initial joint angles.
+   * @param dthetalist Eigen::VectorXd initial joint velocities.
+   * @param taumat Eigen::MatrixXd joint torque trajectory (rows).
+   * @param g Eigen::Vector3d gravity vector.
+   * @param Ftipmat Eigen::MatrixXd end-effector wrenches (rows).
+   * @param Mlist std::vector<Eigen::MatrixXd> link frames at home.
+   * @param Glist std::vector<Eigen::MatrixXd> spatial inertias.
+   * @param Slist Eigen::MatrixXd 6xn screw axes in the space frame.
+   * @param dt double time step between rows of taumat.
+   * @param intRes int integration resolution per time step.
+   * @return std::vector<Eigen::MatrixXd> joint positions and velocities.
    */
   static std::vector<Eigen::MatrixXd> ForwardDynamicsTrajectory(
       const Eigen::VectorXd& thetalist,
