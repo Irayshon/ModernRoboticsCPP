@@ -192,6 +192,14 @@ To run all tests:
 ctest --preset default
 ```
 
+## Publishing Doxygen docs
+
+1) In GitHub repo Settings → Pages, set Source to "GitHub Actions".
+2) Push to `main` to trigger the "Publish Doxygen" workflow.
+3) Once published, access the docs at:
+
+`https://irayshon.github.io/ModernRoboticsCPP/`
+
 ## Numerical considerations
 
 - Many routines involve matrix logarithms and exponentials. Expect small
