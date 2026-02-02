@@ -1,4 +1,4 @@
-#include "my_modern_robotics/dynamics.h"
+#include "my_modern_robotics/inverse_dynamics.h"
 
 #include <Eigen/Dense>
 #include <gtest/gtest.h>
@@ -9,7 +9,7 @@ namespace {
 struct ThreeLinkExampleData {
   Eigen::VectorXd thetalist;
   Eigen::VectorXd dthetalist;
-  Eigen::VectorXd taulist;
+  Eigen::VectorXd ddthetalist;
   Eigen::Vector3d g;
   Eigen::VectorXd Ftip;
   std::vector<Eigen::MatrixXd> Mlist;
@@ -25,8 +25,8 @@ ThreeLinkExampleData MakeThreeLinkExample() {
   data.dthetalist.resize(3);
   data.dthetalist << 0.1, 0.2, 0.3;
 
-  data.taulist.resize(3);
-  data.taulist << 0.5, 0.6, 0.7;
+  data.ddthetalist.resize(3);
+  data.ddthetalist << 2.0, 1.5, 1.0;
 
   data.g = Eigen::Vector3d(0.0, 0.0, -9.8);
 
@@ -82,63 +82,35 @@ ThreeLinkExampleData MakeThreeLinkExample() {
 
 }  // namespace
 
-TEST(DynamicsTest, MassMatrixExample) {
+TEST(InverseDynamicsTest, ThreeLinkExample) {
   const auto data = MakeThreeLinkExample();
 
-  Eigen::MatrixXd mass = mymr::Dynamics::MassMatrix(
-      data.thetalist, data.Mlist, data.Glist, data.Slist);
+  Eigen::VectorXd tau =
+      mymr::InverseDynamics::Compute(data.thetalist, data.dthetalist,
+                                      data.ddthetalist, data.g, data.Ftip,
+                                      data.Mlist, data.Glist, data.Slist);
 
-  Eigen::MatrixXd expected(3, 3);
-  expected << 2.25433380e+01, -3.07146754e-01, -7.18426391e-03,
-      -3.07146754e-01, 1.96850717e+00, 4.32157368e-01,
-      -7.18426391e-03, 4.32157368e-01, 1.91630858e-01;
+  Eigen::VectorXd expected(3);
+  expected << 74.69616155, -33.06766016, -3.23057314;
 
-  for (int r = 0; r < expected.rows(); ++r) {
-    for (int c = 0; c < expected.cols(); ++c) {
-      EXPECT_NEAR(mass(r, c), expected(r, c), 1e-6);
-    }
+  for (int i = 0; i < expected.size(); ++i) {
+    EXPECT_NEAR(tau(i), expected(i), 1e-6);
   }
 }
 
-TEST(DynamicsTest, GravityForcesExample) {
+TEST(InverseDynamicsTest, GravityOnlyExample) {
   const auto data = MakeThreeLinkExample();
+  Eigen::VectorXd zeros = Eigen::VectorXd::Zero(data.thetalist.size());
+  Eigen::VectorXd Ftip = Eigen::VectorXd::Zero(6);
 
-  Eigen::VectorXd tau = mymr::Dynamics::GravityForces(
-      data.thetalist, data.g, data.Mlist, data.Glist, data.Slist);
+  Eigen::VectorXd tau = mymr::InverseDynamics::Compute(
+      data.thetalist, zeros, zeros, data.g, Ftip, data.Mlist, data.Glist,
+      data.Slist);
 
   Eigen::VectorXd expected(3);
   expected << 28.40331262, -37.64094817, -5.4415892;
 
   for (int i = 0; i < expected.size(); ++i) {
     EXPECT_NEAR(tau(i), expected(i), 1e-6);
-  }
-}
-
-TEST(DynamicsTest, VelQuadraticForcesExample) {
-  const auto data = MakeThreeLinkExample();
-
-  Eigen::VectorXd tau = mymr::Dynamics::VelQuadraticForces(
-      data.thetalist, data.dthetalist, data.Mlist, data.Glist, data.Slist);
-
-  Eigen::VectorXd expected(3);
-  expected << 0.26453118, -0.05505157, -0.00689132;
-
-  for (int i = 0; i < expected.size(); ++i) {
-    EXPECT_NEAR(tau(i), expected(i), 1e-6);
-  }
-}
-
-TEST(DynamicsTest, ForwardDynamicsExample) {
-  const auto data = MakeThreeLinkExample();
-
-  Eigen::VectorXd ddthetalist = mymr::Dynamics::ForwardDynamics(
-      data.thetalist, data.dthetalist, data.taulist, data.g, data.Ftip,
-      data.Mlist, data.Glist, data.Slist);
-
-  Eigen::VectorXd expected(3);
-  expected << -0.97392907, 25.58466784, -32.91499212;
-
-  for (int i = 0; i < expected.size(); ++i) {
-    EXPECT_NEAR(ddthetalist(i), expected(i), 1e-6);
   }
 }
