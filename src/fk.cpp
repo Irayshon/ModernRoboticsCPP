@@ -1,8 +1,8 @@
-#include "my_modern_robotics/fk.h"
+#include "DallE/fk.h"
 
-#include "my_modern_robotics/tools.h"
+#include "DallE/tools.h"
 
-namespace mymr {
+namespace DallE {
 Eigen::MatrixXd FK::FKinBody(const Eigen::MatrixXd& M,
                              const Eigen::MatrixXd& Blist,
                              const Eigen::VectorXd& thetalist) {
@@ -25,4 +25,4 @@ Eigen::MatrixXd FK::FKinSpace(const Eigen::MatrixXd& M,
   }
   return T;
 }
-}  // namespace mymr
+}  // namespace DallE

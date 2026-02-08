@@ -1,10 +1,10 @@
-#include "my_modern_robotics/dynamics.h"
+#include "DallE/dynamics.h"
 
-#include "my_modern_robotics/inverse_dynamics.h"
+#include "DallE/inverse_dynamics.h"
 
 #include <vector>
 
-namespace mymr {
+namespace DallE {
 Eigen::MatrixXd Dynamics::MassMatrix(
     const Eigen::VectorXd& thetalist,
     const std::vector<Eigen::MatrixXd>& Mlist,
@@ -157,4 +157,4 @@ std::vector<Eigen::MatrixXd> Dynamics::ForwardDynamicsTrajectory(
   }
   return {thetamat, dthetamat};
 }
-}  // namespace mymr
+}  // namespace DallE

@@ -1,9 +1,9 @@
-#include "my_modern_robotics/ik.h"
+#include "DallE/ik.h"
 
 #include <algorithm>
 
-#include "my_modern_robotics/fk.h"
-#include "my_modern_robotics/tools.h"
+#include "DallE/fk.h"
+#include "DallE/tools.h"
 
 namespace {
 Eigen::MatrixXd PseudoInverse(const Eigen::MatrixXd& J) {
@@ -23,7 +23,7 @@ Eigen::MatrixXd PseudoInverse(const Eigen::MatrixXd& J) {
 }
 }  // namespace
 
-namespace mymr {
+namespace DallE {
 bool IK::IKinBody(const Eigen::MatrixXd& Blist,
                   const Eigen::MatrixXd& M,
                   const Eigen::MatrixXd& T,
@@ -75,4 +75,4 @@ bool IK::IKinSpace(const Eigen::MatrixXd& Slist,
 
   return !err;
 }
-}  // namespace mymr
+}  // namespace DallE

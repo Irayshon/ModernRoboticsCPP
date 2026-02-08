@@ -3,7 +3,7 @@
 #include <Eigen/Dense>
 #include <vector>
 
-namespace mymr {
+namespace DallE {
 /**
  * @brief Time scaling and trajectory generation utilities.
  */
@@ -72,4 +72,4 @@ class Trajectory {
       int N,
       int method);
 };
-}  // namespace mymr
+}  // namespace DallE

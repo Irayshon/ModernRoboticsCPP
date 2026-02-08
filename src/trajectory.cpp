@@ -1,8 +1,8 @@
-#include "my_modern_robotics/trajectory.h"
+#include "DallE/trajectory.h"
 
-#include "my_modern_robotics/tools.h"
+#include "DallE/tools.h"
 
-namespace mymr {
+namespace DallE {
 double Trajectory::CubicTimeScaling(double Tf, double t) {
   double ratio = t / Tf;
   return 3.0 * ratio * ratio - 2.0 * ratio * ratio * ratio;
@@ -77,4 +77,4 @@ std::vector<Eigen::MatrixXd> Trajectory::CartesianTrajectory(
   }
   return traj;
 }
-}  // namespace mymr
+}  // namespace DallE

@@ -3,7 +3,7 @@
 #include <Eigen/Dense>
 #include <vector>
 
-namespace mymr {
+namespace DallE {
 /**
  * @brief Forward dynamics and force-related helpers.
  */
@@ -155,4 +155,4 @@ class Dynamics {
       double dt,
       int intRes);
 };
-}  // namespace mymr
+}  // namespace DallE

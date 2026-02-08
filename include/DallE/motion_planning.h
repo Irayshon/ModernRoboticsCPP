@@ -1,10 +1,10 @@
 #pragma once
 
-namespace mymr {
+namespace DallE {
 /**
  * @brief Placeholder for future motion planning utilities.
  */
 class MotionPlanning {
  public:
 };
-}  // namespace mymr
+}  // namespace DallE

@@ -1,10 +1,10 @@
-#include "my_modern_robotics/inverse_dynamics.h"
+#include "DallE/inverse_dynamics.h"
 
-#include "my_modern_robotics/tools.h"
+#include "DallE/tools.h"
 
 #include <vector>
 
-namespace mymr {
+namespace DallE {
 Eigen::VectorXd InverseDynamics::Compute(
     const Eigen::VectorXd& thetalist,
     const Eigen::VectorXd& dthetalist,
@@ -45,4 +45,4 @@ Eigen::VectorXd InverseDynamics::Compute(
 
   return taulist;
 }
-}  // namespace mymr
+}  // namespace DallE

@@ -1,9 +1,9 @@
-#include "my_modern_robotics/robot_control.h"
+#include "DallE/robot_control.h"
 
-#include "my_modern_robotics/dynamics.h"
-#include "my_modern_robotics/inverse_dynamics.h"
+#include "DallE/dynamics.h"
+#include "DallE/inverse_dynamics.h"
 
-namespace mymr {
+namespace DallE {
 Eigen::VectorXd RobotControl::ComputedTorque(
     const Eigen::VectorXd& thetalist,
     const Eigen::VectorXd& dthetalist,
@@ -85,4 +85,4 @@ std::vector<Eigen::MatrixXd> RobotControl::SimulateControl(
   control_traj.push_back(thetamatT.transpose());
   return control_traj;
 }
-}  // namespace mymr
+}  // namespace DallE

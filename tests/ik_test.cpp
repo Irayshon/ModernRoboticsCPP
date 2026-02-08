@@ -1,5 +1,5 @@
-#include "my_modern_robotics/fk.h"
-#include "my_modern_robotics/ik.h"
+#include "DallE/fk.h"
+#include "DallE/ik.h"
 
 #include <Eigen/Dense>
 #include <cmath>
@@ -39,14 +39,14 @@ TEST(IKTest, BodyAndSpaceExample) {
   thetalist0 << 1.5, 2.5, 3.0;
 
   Eigen::VectorXd thetalist_body = thetalist0;
-  bool success_body = mymr::IK::IKinBody(Blist, M, T, thetalist_body, 1e-3, 1e-3);
+  bool success_body = DallE::IK::IKinBody(Blist, M, T, thetalist_body, 1e-3, 1e-3);
   EXPECT_TRUE(success_body);
-  auto T_body = mymr::FK::FKinBody(M, Blist, thetalist_body);
+  auto T_body = DallE::FK::FKinBody(M, Blist, thetalist_body);
 
   Eigen::VectorXd thetalist_space = thetalist0;
-  bool success_space = mymr::IK::IKinSpace(Slist, M, T, thetalist_space, 1e-3, 1e-3);
+  bool success_space = DallE::IK::IKinSpace(Slist, M, T, thetalist_space, 1e-3, 1e-3);
   EXPECT_TRUE(success_space);
-  auto T_space = mymr::FK::FKinSpace(M, Slist, thetalist_space);
+  auto T_space = DallE::FK::FKinSpace(M, Slist, thetalist_space);
 
   for (int r = 0; r < 4; ++r) {
     for (int c = 0; c < 4; ++c) {
@@ -98,14 +98,14 @@ TEST(IKTest, PlanarTwoLinkTarget) {
   thetalist0 << 0.7, -1.0;
 
   Eigen::VectorXd thetalist_body = thetalist0;
-  bool success_body = mymr::IK::IKinBody(Blist, M, T, thetalist_body, 1e-4, 1e-4);
+  bool success_body = DallE::IK::IKinBody(Blist, M, T, thetalist_body, 1e-4, 1e-4);
   EXPECT_TRUE(success_body);
-  auto T_body = mymr::FK::FKinBody(M, Blist, thetalist_body);
+  auto T_body = DallE::FK::FKinBody(M, Blist, thetalist_body);
 
   Eigen::VectorXd thetalist_space = thetalist0;
-  bool success_space = mymr::IK::IKinSpace(Slist, M, T, thetalist_space, 1e-4, 1e-4);
+  bool success_space = DallE::IK::IKinSpace(Slist, M, T, thetalist_space, 1e-4, 1e-4);
   EXPECT_TRUE(success_space);
-  auto T_space = mymr::FK::FKinSpace(M, Slist, thetalist_space);
+  auto T_space = DallE::FK::FKinSpace(M, Slist, thetalist_space);
 
   for (int r = 0; r < 4; ++r) {
     for (int c = 0; c < 4; ++c) {

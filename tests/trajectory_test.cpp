@@ -1,4 +1,4 @@
-#include "my_modern_robotics/trajectory.h"
+#include "DallE/trajectory.h"
 
 #include <Eigen/Dense>
 #include <gtest/gtest.h>
@@ -19,11 +19,11 @@ void ExpectMatrixNear(const Eigen::MatrixXd& actual,
 
 TEST(TrajectoryTest, QuinticTimeScalingExpectedValues) {
   double Tf = 4.0;
-  EXPECT_NEAR(mymr::Trajectory::QuinticTimeScaling(Tf, 0.0), 0.0, 1e-12);
-  EXPECT_NEAR(mymr::Trajectory::QuinticTimeScaling(Tf, Tf / 4.0), 0.103515625,
+  EXPECT_NEAR(DallE::Trajectory::QuinticTimeScaling(Tf, 0.0), 0.0, 1e-12);
+  EXPECT_NEAR(DallE::Trajectory::QuinticTimeScaling(Tf, Tf / 4.0), 0.103515625,
               1e-12);
-  EXPECT_NEAR(mymr::Trajectory::QuinticTimeScaling(Tf, Tf / 2.0), 0.5, 1e-12);
-  EXPECT_NEAR(mymr::Trajectory::QuinticTimeScaling(Tf, Tf), 1.0, 1e-12);
+  EXPECT_NEAR(DallE::Trajectory::QuinticTimeScaling(Tf, Tf / 2.0), 0.5, 1e-12);
+  EXPECT_NEAR(DallE::Trajectory::QuinticTimeScaling(Tf, Tf), 1.0, 1e-12);
 }
 
 TEST(TrajectoryTest, ScrewTrajectoryEndpoints) {
@@ -42,7 +42,7 @@ TEST(TrajectoryTest, ScrewTrajectoryEndpoints) {
   int method = 5;
 
   std::vector<Eigen::MatrixXd> traj =
-      mymr::Trajectory::ScrewTrajectory(Xstart, Xend, Tf, N, method);
+      DallE::Trajectory::ScrewTrajectory(Xstart, Xend, Tf, N, method);
 
   ASSERT_EQ(static_cast<int>(traj.size()), N);
   ExpectMatrixNear(traj.front(), Xstart, 1e-6);
@@ -65,7 +65,7 @@ TEST(TrajectoryTest, CartesianTrajectoryEndpoints) {
   int method = 5;
 
   std::vector<Eigen::MatrixXd> traj =
-      mymr::Trajectory::CartesianTrajectory(Xstart, Xend, Tf, N, method);
+      DallE::Trajectory::CartesianTrajectory(Xstart, Xend, Tf, N, method);
 
   ASSERT_EQ(static_cast<int>(traj.size()), N);
   ExpectMatrixNear(traj.front(), Xstart, 1e-6);
@@ -82,7 +82,7 @@ TEST(TrajectoryTest, JointTrajectoryCubicExample) {
   int method = 3;
 
   Eigen::MatrixXd traj =
-      mymr::Trajectory::JointTrajectory(thetastart, thetaend, Tf, N, method);
+      DallE::Trajectory::JointTrajectory(thetastart, thetaend, Tf, N, method);
 
   Eigen::Matrix<double, 6, 8> expected;
   expected << 1, 0, 0, 1, 1, 0.2, 0, 1,

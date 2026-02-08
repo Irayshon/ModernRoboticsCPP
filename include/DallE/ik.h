@@ -2,7 +2,7 @@
 
 #include <Eigen/Dense>
 
-namespace mymr {
+namespace DallE {
 /**
  * @brief Inverse kinematics functions.
  */
@@ -42,4 +42,4 @@ class IK {
                         double eomg,
                         double ev);
 };
-}  // namespace mymr
+}  // namespace DallE
