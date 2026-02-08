@@ -8,6 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 include(CTest)
 
 find_package(Eigen3 CONFIG REQUIRED)
+find_package(OsqpEigen CONFIG REQUIRED)
 
 add_library(DallE
   src/tools.cpp
@@ -24,7 +25,7 @@ target_include_directories(DallE PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-target_link_libraries(DallE PUBLIC Eigen3::Eigen)
+target_link_libraries(DallE PUBLIC Eigen3::Eigen OsqpEigen::OsqpEigen)
 
 if(BUILD_TESTING)
   find_package(GTest CONFIG REQUIRED)

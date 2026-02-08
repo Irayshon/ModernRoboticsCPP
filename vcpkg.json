@@ -1,8 +1,9 @@
 {
-  "name": "my-modern-robotics-cpp",
+  "name": "dalle",
   "version-string": "0.1.0",
   "dependencies": [
     "eigen3",
-    "gtest"
+    "gtest",
+    "osqp-eigen"
   ]
 }
