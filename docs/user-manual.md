@@ -1,8 +1,8 @@
-# My Modern Robotics C++ User Manual
+# DallE User Manual
 
 ## Overview
 
-My Modern Robotics C++ is a class-based C++ API for the core algorithms from
+DallE is a class-based C++ API for the core algorithms from
 the Modern Robotics textbook. The library keeps the original function names
 and signatures, but organizes them into focused classes for clarity.
 

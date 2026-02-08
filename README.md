@@ -1,4 +1,4 @@
-# My Modern Robotics C++
+# DallE
 
 This project provides a class-based C++ API for core Modern Robotics routines.
 The API is split into focused classes so you can include only what you need.
