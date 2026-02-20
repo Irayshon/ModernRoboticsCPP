@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="xarm_device">
+  <xacro:macro name="xarm_device" params="
+    prefix:=''
+    hw_ns:='xarm'
+    effort_control:=false 
+    velocity_control:=false
+    add_gripper:=false
+    dof:=7
+    robot_type:='xarm'
+    ros2_control_plugin:='gz_ros2_control/GazeboSimSystem'
+    attach_to:='world'
+    attach_xyz:='0 0 0'
+    attach_rpy:='0 0 0'
+    create_attach_link:=true
+    ros2_control_params:=''
+    load_gazebo_plugin:=false 
+    robot_ip:=''
+    report_type:='normal'
+    baud_checkset:=true
+    default_gripper_baud:=2000000 
+    model1300:=false
+    robot_sn:=''
+    "
+    > 
+
+    <!-- Load Common Material -->
+    <!-- <xacro:include filename="$(find robot_model)/urdf/xArm7/_private_macro.xacro" /> -->
+
+    <!-- <xacro:device_macro_begin /> -->
+
+    <!-- Load Common Material -->
+    <xacro:include filename="$(find robot_model)/urdf/xArm7/common.material.xacro" />
+    <xacro:include filename="$(find robot_model)/urdf/xArm7/xArm7.gazebo.xacro" />
+    <xacro:include filename="$(find robot_model)/urdf/xArm7/common.link.xacro" />
+
+    
+    <xacro:if value="${ros2_control_plugin == 'gazebo_ros2_control/GazeboSystem' or ros2_control_plugin == 'ign_ros2_control/IgnitionSystem' or ros2_control_plugin == 'gz_ros2_control/GazeboSimSystem'}">
+    
+      <xacro:property name="mesh_path" value="file://$(find robot_model)/meshes" scope="parent"/>
+    </xacro:if>
+    <xacro:unless value="${ros2_control_plugin == 'gazebo_ros2_control/GazeboSystem' or ros2_control_plugin == 'ign_ros2_control/IgnitionSystem' or ros2_control_plugin == 'gz_ros2_control/GazeboSimSystem'}">
+      <xacro:property name="mesh_path" value="package://robot_model/meshes" scope="parent"/>
+    </xacro:unless> 
+
+    <!-- include common.link.xacro -->
+    <xacro:link_inertial_filename inertial_params_filename="xarm7_type7_HT_BR"/>
+    <xacro:property name="inertial_params_filename" value="${scope_parent_inertial_params_filename}"/>
+    <xacro:property name="model_num" value="${scope_parent_model_num}"/>
+
+
+    <!-- add one world link if no 'attach_to' specified  -->
+    <xacro:if value="${attach_to == 'world' and create_attach_link}">
+      <link name="world" />
+    </xacro:if>
+
+    <!-- check this oncee regarfing frames where present -->
+
+    <joint name="${prefix}world_joint" type="fixed">
+      <parent link="${attach_to}" />
+      <child link="${prefix}link_base" />
+      <origin xyz="${attach_xyz}" rpy="${attach_rpy}" />
+    </joint>
+
+
+
+    <!-- check this after once -->
+    <xacro:if value="${effort_control}"> 
+      <xacro:property name="hard_interface" value="EffortJointInterface" />
+    </xacro:if>
+    <xacro:unless value="${effort_control}"> 
+      <xacro:if value="${velocity_control}"> 
+        <xacro:property name="hard_interface" value="VelocityJointInterface" />
+      </xacro:if>
+      <xacro:unless value="${velocity_control}"> 
+        <xacro:property name="hard_interface" value="PositionJointInterface" />
+      </xacro:unless>
+    </xacro:unless>
+
+    <xacro:property name="robot_name" value="xarm7" />
+
+
+    <xacro:property name="kinematics_params_filename" value="$(find robot_model)/config/kinematics/default/${robot_name}_default_kinematics.yaml"/>
+
+    
+    <!-- Load XArm7 Robot Model URDF -->
+    <xacro:include filename="$(find robot_model)/urdf/xArm7/xArm7_robot.urdf.xacro" />
+    <xacro:xarm7_robot prefix="${prefix}" hw_ns="${hw_ns}" 
+      velocity_control="${velocity_control}" 
+      ros2_control_plugin="${ros2_control_plugin}"
+      add_gripper="${add_gripper}"
+      robot_ip="${robot_ip}"
+      report_type="${report_type}"
+      baud_checkset="${baud_checkset}"
+      default_gripper_baud="${default_gripper_baud}" 
+      model_num="${model_num}"
+      inertial_params_filename="${inertial_params_filename}"
+      kinematics_params_filename="${kinematics_params_filename}"
+      hard_interface="${hard_interface}"
+      mesh_path="${mesh_path}" />
+
+    
+    
+    <xacro:if value="${add_gripper}">
+        <xacro:include filename="$(find robot_models)/urdf/gripper/xarm_gripper_macro.xacro" />
+        <xacro:xarm_gripper_macro prefix="${prefix}" attach_to="${prefix}link_eef" 
+          ros2_control_plugin="${ros2_control_plugin}" dof="${dof}" hard_interface="${hard_interface}" />
+    </xacro:if>
+
+    <!-- gazebo_plugin -->
+    <!-- <xacro:if value="${load_gazebo_plugin}">
+        
+
+        <xacro:property name="new_ros2_control_params" value="${ros2_control_params}"/>
+
+        <xacro:if value="${ros2_control_plugin == 'gz_ros2_control/GazeboSimSystem'}">
+          <xacro:gz_ros2_control_plugin ros2_control_params="${new_ros2_control_params}"/>
+        </xacro:if>
+        <xacro:if value="${ros2_control_plugin == 'ign_ros2_control/IgnitionSystem'}">
+          <xacro:ignition_ros2_control_plugin ros2_control_params="${new_ros2_control_params}"/>
+        </xacro:if>
+        <xacro:if value="${ros2_control_plugin == 'gazebo_ros2_control/GazeboSystem'}">
+          <xacro:gazebo_ros2_control_plugin ros2_control_params="${new_ros2_control_params}"/>
+        </xacro:if>
+
+    </xacro:if> -->
+
+    <!-- <xacro:device_macro_end /> -->
+
+  </xacro:macro>
+</robot>

@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="xArm7" >
+  <xacro:macro name="xarm7_robot" params="
+    prefix:=''
+    hw_ns:='xarm'
+    velocity_control:=false
+    add_gripper:=false 
+    add_bio_gripper:=false 
+    ros2_control_plugin:='uf_robot_hardware/UFRobotSystemHardware'
+    robot_ip:=''
+    report_type:='normal'
+    baud_checkset:='true'
+    default_gripper_baud:=2000000 
+    model_num:=0
+    inertial_params_filename:=''
+    kinematics_params_filename:=''
+  hard_interface:='PositionJointInterface'
+  mesh_path:='package://robot_model/meshes' "
+    >  
+
+    <!-- xarm7 -->
+    <xacro:include filename="$(find robot_model)/urdf/xArm7/xArm7.ros2_control.xacro" />
+    <xacro:include filename="$(find robot_model)/urdf/xArm7/xArm7.urdf.xacro" />
+    <xacro:include filename="$(find robot_model)/urdf/xArm7/xArm7.gazebo.xacro" />
+
+
+    <xacro:xarm7_ros2_control prefix="${prefix}"
+      velocity_control="${velocity_control}"
+      ros2_control_plugin="${ros2_control_plugin}"
+      hw_ns="${hw_ns}" add_gripper="${add_gripper}"
+      robot_ip="${robot_ip}" report_type="${report_type}"
+      baud_checkset="${baud_checkset}" default_gripper_baud="${default_gripper_baud}"
+      joint1_lower_limit="${-pi*0.99}" joint1_upper_limit="${pi*0.99}"
+      joint2_lower_limit="${-2.18}" joint2_upper_limit="${2.18}"
+      joint3_lower_limit="${-pi*0.99}" joint3_upper_limit="${pi*0.99}"
+      joint4_lower_limit="${-0.11}" joint4_upper_limit="${pi*0.99}"
+      joint5_lower_limit="${-pi*0.99}" joint5_upper_limit="${pi*0.99}"
+      joint6_lower_limit="${-1.75}" joint6_upper_limit="${pi*0.99}"
+      joint7_lower_limit="${-pi*0.99}" joint7_upper_limit="${pi*0.99}"
+    />
+
+
+    <xacro:xarm7_urdf prefix="${prefix}"
+      joint1_lower_limit="${-pi*0.99}" joint1_upper_limit="${pi*0.99}"
+      joint2_lower_limit="${-2.18}" joint2_upper_limit="${2.18}"
+      joint3_lower_limit="${-pi*0.99}" joint3_upper_limit="${pi*0.99}"
+      joint4_lower_limit="${-0.11}" joint4_upper_limit="${pi*0.99}"
+      joint5_lower_limit="${-pi*0.99}" joint5_upper_limit="${pi*0.99}"
+      joint6_lower_limit="${-1.75}" joint6_upper_limit="${pi*0.99}"
+      joint7_lower_limit="${-pi*0.99}" joint7_upper_limit="${pi*0.99}"
+      model_num="${model_num}"
+      inertial_params_filename="${inertial_params_filename}"
+      kinematics_params_filename="${kinematics_params_filename}"
+      mesh_path="${mesh_path}"
+    />
+
+    <xacro:xarm7_gazebo prefix="${prefix}" />
+
+  </xacro:macro>
+
+</robot>

@@ -1,0 +1,16 @@
+services:
+  robot_dynamics_service:
+    build: .
+    image: robot_dynamics_image
+    container_name: robot_dynamics_container
+    volumes:
+      - .:/robot_dynamics
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    devices:
+      - /dev/dri:/dev/dri          
+    environment:
+      - ROS_DOMAIN_ID=0
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1          
+    stdin_open: true
+    tty: true

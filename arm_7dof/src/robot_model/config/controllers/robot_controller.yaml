@@ -1,0 +1,53 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 100 
+    use_sim_time: true
+
+    # The broadcaster to publish joint states
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    # Controller for Position Control
+    position_trajectory_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+    # Controller for Velocity Control
+    velocity_trajectory_controller:
+      type: velocity_controllers/JointGroupVelocityController
+
+position_trajectory_controller:
+  ros__parameters:
+    joints:
+      - joint1
+      - joint3
+      - joint5
+      - joint6
+      - joint7
+      - joint8
+      - joint9
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+    
+
+    state_publish_rate: 100.0
+    action_monitor_rate: 20.0
+    allow_partial_joints_goal: false
+
+velocity_trajectory_controller:
+  ros__parameters:
+    joints:
+      - joint1
+      - joint3
+      - joint5
+      - joint6
+      - joint7
+      - joint8
+      - joint9
+    command_interfaces:
+      - velocity
+    state_interfaces:
+      - position
+      - velocity

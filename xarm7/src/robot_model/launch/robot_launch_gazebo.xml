@@ -1,0 +1,34 @@
+<launch>
+  <arg name="pkg_project_description" default="$(find-pkg-share robot_model)"/>
+
+  <let name="robot_desc" value="$(command 'xacro $(var pkg_project_description)/urdf/xArm7/xArm7_main.xacro')"/>
+
+
+  <include file="$(find-pkg-share ros_gz_sim)/launch/gz_sim.launch.py">
+    <arg name="gz_args" value="-r empty.sdf"/>
+  </include>
+
+  <node pkg="ros_gz_sim" exec="create" name="spawn_robot"
+        args="-topic robot_description -name robot_robot -x 0 -y 0 -z 0"
+        output="screen">
+  </node>
+ 
+  <node pkg="ros_gz_bridge" exec="parameter_bridge" name="gz_clock_bridge"
+        args="/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock">
+    <param name="use_sim_time" value="true"/>
+  </node>
+
+  <node pkg="robot_state_publisher" exec="robot_state_publisher" name="robot_state_publisher">
+    <param name="robot_description" value="$(var robot_desc)"/>
+    <param name="use_sim_time" value="true"/>
+  </node>
+
+  <node pkg="controller_manager" exec="spawner" args="joint_state_broadcaster">
+    <param name="use_sim_time" value="true"/>
+  </node>
+
+  <node pkg="controller_manager" exec="spawner" args="position_trajectory_controller">
+    <param name="use_sim_time" value="true"/>
+  </node>
+
+</launch>

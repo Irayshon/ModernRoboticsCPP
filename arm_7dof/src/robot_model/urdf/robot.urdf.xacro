@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<robot name="robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:arg name="cmd_interface" default="position" />
+
+    <xacro:include filename="robot_main.xacro" />
+    <xacro:include filename="robot_utils.xacro" />
+    <xacro:include filename="robot.ros2_control.xacro" />
+    <xacro:include filename="robot_gazebo.xacro" />
+
+    <xacro:robot_ros2_control name="robot" cmd_interface="$(arg cmd_interface)" />
+
+        
+</robot>

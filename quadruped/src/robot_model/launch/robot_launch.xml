@@ -1,0 +1,38 @@
+<launch>
+  <arg name="pkg_project_description" default="$(find-pkg-share robot_model)"/>
+  <arg name="rviz_config_path" default="$(find-pkg-share robot_model)/config/rviz/robot.rviz"/>
+  
+  <let name="robot_desc" value="$(command 'xacro $(var pkg_project_description)/urdf/robot.xacro')"/>
+
+  <node pkg="robot_state_publisher" exec="robot_state_publisher" name="robot_state_publisher">
+    <param name="robot_description" value="$(var robot_desc)"/>
+    <param name="use_sim_time" value="true"/>
+  </node>
+
+  <include file="$(find-pkg-share ros_gz_sim)/launch/gz_sim.launch.py">
+    <arg name="gz_args" value="-r empty.sdf"/>
+  </include>
+
+  <node pkg="ros_gz_sim" exec="create" name="spawn_robot"
+        args="-topic robot_description -name robot_robot -x 0 -y 0 -z 0.6"
+        output="screen">
+  </node>
+ 
+  <node pkg="ros_gz_bridge" exec="parameter_bridge" name="gz_clock_bridge"
+        args="/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock">
+  </node>
+
+  <node pkg="controller_manager" exec="spawner" args="joint_state_broadcaster">
+    <param name="use_sim_time" value="true"/>
+  </node>
+
+  <node pkg="controller_manager" exec="spawner" args="joint_trajectory_controller">
+    <param name="use_sim_time" value="true"/>
+  </node>
+
+  <node pkg="rviz2" exec="rviz2" name="rviz2" output="screen" 
+        args="-d $(var rviz_config_path)">
+    <param name="use_sim_time" value="true"/>
+  </node>
+
+</launch>

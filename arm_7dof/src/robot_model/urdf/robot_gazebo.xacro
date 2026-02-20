@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <gazebo>
+    <plugin name="gz_ros2_control::GazeboSimROS2ControlPlugin" filename="gz_ros2_control-system">
+      <parameters>$(find robot_model)/config/controllers/robot_controller.yaml</parameters>
+    </plugin>
+  </gazebo>
+
+  <xacro:macro name="gazebo_link_settings" params="ref color">
+    <gazebo reference="${ref}">
+      <material>${color}</material>
+      <mu1>0.2</mu1>
+      <mu2>0.2</mu2>
+      <self_collide>true</self_collide>
+    </gazebo>
+  </xacro:macro>
+
+  <xacro:gazebo_link_settings ref="base_link"   color="Gazebo/Black"/>
+  <xacro:gazebo_link_settings ref="joint1_link" color="Gazebo/Grey"/>
+  <xacro:gazebo_link_settings ref="joint2_link" color="Gazebo/Black"/>
+  <xacro:gazebo_link_settings ref="joint3_link" color="Gazebo/Grey"/>
+  <xacro:gazebo_link_settings ref="joint4_link" color="Gazebo/Black"/>
+  <xacro:gazebo_link_settings ref="joint5_link" color="Gazebo/Grey"/>
+  <xacro:gazebo_link_settings ref="joint6_link" color="Gazebo/Black"/>
+  <xacro:gazebo_link_settings ref="joint7_link" color="Gazebo/Grey"/>
+  <xacro:gazebo_link_settings ref="joint8_link" color="Gazebo/Black"/>
+  <xacro:gazebo_link_settings ref="joint9_link" color="Gazebo/Grey"/>
+
+</robot>

@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+
+    <!-- use parameters file example:xArm7_type_HT_LD.yaml -->
+    <xacro:macro name="common_link_inertial" params="link_inertial_params origin_rpy:='0 0 0'">
+        <inertial>
+        <origin
+            xyz="${link_inertial_params['origin']['x']} ${link_inertial_params['origin']['y']} ${link_inertial_params['origin']['z']}"
+            rpy="${origin_rpy}" />
+        <mass value="${link_inertial_params['mass']}" />
+        <inertia
+            ixx="${link_inertial_params['inertia']['ixx']}"
+            ixy="${link_inertial_params['inertia']['ixy']}"
+            ixz="${link_inertial_params['inertia']['ixz']}"
+            iyy="${link_inertial_params['inertia']['iyy']}"
+            iyz="${link_inertial_params['inertia']['iyz']}"
+            izz="${link_inertial_params['inertia']['izz']}" />
+        </inertial>
+    </xacro:macro>
+
+    <!-- <xacro:macro name="common_link_mesh" params="mesh_filename use_mesh_path:=true">
+        <xacro:if value="${use_mesh_path}">
+        <mesh filename="${mesh_path}/${mesh_filename}"/>
+        </xacro:if>
+        <xacro:unless value="${use_mesh_path}">
+        <mesh filename="${mesh_filename}"/>
+        </xacro:unless>
+    </xacro:macro> -->
+
+    <!-- used in main xArm7.urdf.xacro in main directory -->
+    <xacro:macro name="common_link_visual" params="mesh_filename material_name:='White' origin_xyz:='0 0 0' origin_rpy:='0 0 0'">
+        <visual>
+            <geometry>
+            <mesh filename="${mesh_filename}"/>
+            </geometry>
+            <origin xyz="${origin_xyz}" rpy="${origin_rpy}"/>
+            <material name="${material_name}"/>
+        </visual>
+    </xacro:macro>
+
+    <!-- used in main xArm7.urdf.xacro in main directory -->    
+    <xacro:macro name="common_link_collision" params="mesh_filename origin_xyz:='0 0 0' origin_rpy:='0 0 0' ">
+        <collision>
+        <geometry>
+            <mesh filename="${mesh_filename}"/>
+        </geometry>
+        <origin xyz="${origin_xyz}" rpy="${origin_rpy}"/>
+        </collision>
+    </xacro:macro>
+
+
+    <xacro:macro name="common_joint_origin" params="joint_kinematic_params">
+        <origin xyz="${joint_kinematic_params['x']} ${joint_kinematic_params['y']} ${joint_kinematic_params['z']}" rpy="${joint_kinematic_params['roll']} ${joint_kinematic_params['pitch']} ${joint_kinematic_params['yaw']}" />
+    </xacro:macro>
+
+  <xacro:macro name="link_inertial_filename" params="inertial_params_filename">
+    <xacro:property name="scope_parent_inertial_params_filename" value="${inertial_params_filename}" scope="parent"/>
+    <xacro:property name="scope_parent_model_num" value="1300" scope="parent"/>
+  </xacro:macro>
+
+</robot>

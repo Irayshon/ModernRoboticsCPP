@@ -1,0 +1,24 @@
+# Ignore VS Code project settings and massive IntelliSense databases
+
+
+# Ignore Python virtual environments if they are in src
+
+.vscode/
+
+arm_7dof/src/.vscode/
+quadruped/src/.vscode/
+xarm7/src/.vscode/
+
+# Ignore Python bytecode
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignore ROS 2 build artifacts (if they accidentally end up in src)
+src/build/
+src/install/
+src/log/
+
+# Ignore hidden system files
+.DS_Store
+Thumbs.db

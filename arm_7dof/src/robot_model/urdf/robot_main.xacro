@@ -1,0 +1,329 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="robot_inertia.xacro" />
+
+
+  <link name="base_link">
+
+    <!-- Visual -->
+    <visual>
+      <origin xyz="0 0 0.5" rpy="0 0 0"/>
+      <material name="black" />
+      <geometry>
+        <cylinder radius="3" length="1"/>
+      </geometry>
+    </visual>
+
+    <!-- Collision -->
+    <collision>
+      <origin xyz="0 0 0.5" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="3" length="1"/>
+      </geometry>
+    </collision>
+
+    <xacro:cylinder_inertia m="100.0" r="3" h="1"/>
+
+  </link>
+
+
+  <link name="joint1_link">
+
+    <!-- Visual -->
+    <visual>
+      <origin xyz="0 0 2" rpy="0 0 0"/>
+      <material name="grey" />
+      <geometry>
+        <box size="1 1 4" />
+      </geometry>
+       
+    </visual>
+
+    <!-- Collision -->
+    <collision>
+      <origin xyz="0 0 2" rpy="0 0 0"/>
+      <geometry>
+        <box size="1 1 4" />
+      </geometry>
+    </collision>
+
+    <xacro:box_inertia m="2.0" x="1" y="1" z="4"/>
+
+  </link>
+
+   <joint name="joint1" type="revolute">
+        <parent link="base_link" />
+        <child link="joint1_link" />
+        <origin xyz="0 0 1" rpy="0 0 0" />
+        <axis xyz="0 0 1" />
+        <limit effort="1000.0" velocity="1.0" lower="-3.14" upper="3.14" />
+    </joint>
+
+
+
+    <link name="joint2_link">
+
+    <!-- Visual -->
+    <visual>
+      <origin xyz="1 0 0" rpy="0 1.57 0"/>
+      <material name="black" />
+      <geometry>
+        <box size="1 1 2" />
+      </geometry>
+    </visual>
+
+    <!-- Collision -->
+    <collision>
+      <origin xyz="1 0 0" rpy="0 1.57 0"/>
+      <geometry>
+        <box size="1 1 2" />
+      </geometry>
+    </collision>
+
+    <xacro:box_inertia m="2.0" x="1" y="1" z="2"/>
+
+  </link>
+
+   <joint name="joint2" type="fixed">
+        <parent link="joint1_link" />
+        <child link="joint2_link" />
+        <origin xyz="0 0 4" rpy="0 0 0" />
+  </joint>
+
+
+
+  <link name="joint3_link">
+
+    <!-- Visual -->
+    <visual>
+      <origin xyz="0 0 2" rpy="0 1.57 0"/>
+      <material name="grey" />
+      <geometry>
+        <box size="4 1 1" />
+      </geometry>
+    </visual>
+
+    <!-- Collision -->
+    <collision>
+      <origin xyz="0 0 2" rpy="0 1.57 0"/>
+      <geometry>
+        <box size="4 1 1" />
+      </geometry>
+    </collision>
+
+    <xacro:box_inertia m="2.0" x="4" y="1" z="1"/>
+
+  </link>
+
+   <joint name="joint3" type="revolute">
+        <parent link="joint2_link" />
+        <child link="joint3_link" />
+        <origin xyz="2 0 0" rpy="0 0 0" />
+        <axis xyz="1 0 0" />
+        <limit effort="1000.0" velocity="1.0" lower="-3.14" upper="3.14" />
+  </joint>
+
+
+
+
+  <link name="joint4_link">
+
+    <!-- Visual -->
+    <visual>
+      <origin xyz="-1 0 0" rpy="0 1.57 0"/>
+      <material name="black" />
+      <geometry>
+        <box size="1 1 2" />
+      </geometry>
+    </visual>
+
+    <!-- Collision -->
+    <collision>
+      <origin xyz="-1 0 0" rpy="0 1.57 0"/>
+      <geometry>
+        <box size="1 1 2" />
+      </geometry>
+    </collision>
+
+    <xacro:box_inertia m="2.0" x="1" y="1" z="2"/>
+
+  </link>
+
+   <joint name="joint4" type="fixed">
+        <parent link="joint3_link" />
+        <child link="joint4_link" />
+        <origin xyz="0 0 4" rpy="0 0 0" />
+  </joint>
+
+
+
+
+  <link name="joint5_link">
+
+    <!-- Visual -->
+    <visual>
+      <origin xyz="0 0 2" rpy="0 1.57 0"/>
+      <material name="grey" />
+      <geometry>
+        <box size="4 1 1" />
+      </geometry>
+    </visual>
+
+    <!-- Collision -->
+    <collision>
+      <origin xyz="0 0 2" rpy="0 1.57 0"/>
+      <geometry>
+        <box size="4 1 1" />
+      </geometry>
+    </collision>
+
+    <xacro:box_inertia m="2.0" x="4" y="1" z="1"/>
+
+  </link>
+
+   <joint name="joint5" type="revolute">
+        <parent link="joint4_link" />
+        <child link="joint5_link" />
+        <origin xyz="-2 0 0" rpy="0 0 0" />
+        <axis xyz="1 0 0" />
+        <limit effort="1000.0" velocity="1.0" lower="-3.14" upper="3.14" />
+  </joint>
+
+
+
+
+  <link name="joint6_link">
+
+    <!-- Visual -->
+    <visual>
+      <origin xyz="0 0 0.5" rpy="0 1.57 0"/>
+      <material name="black" />
+      <geometry>
+        <box size="1 1 1" />
+      </geometry>
+    </visual>
+
+    <!-- Collision -->
+    <collision>
+      <origin xyz="0 0 0.5" rpy="0 1.57 0"/>
+      <geometry>
+        <box size="1 1 1" />
+      </geometry>
+    </collision>
+
+    <xacro:box_inertia m="2.0" x="1" y="1" z="1"/>
+
+  </link>
+
+   <joint name="joint6" type="revolute">
+        <parent link="joint5_link" />
+        <child link="joint6_link" />
+        <origin xyz="0 0 4" rpy="0 0 0" />
+        <axis xyz="0 0 1" />
+        <limit effort="1000.0" velocity="1.0" lower="-3.14" upper="3.14" />
+  </joint>
+
+
+   <link name="joint7_link">
+
+    <!-- Visual -->
+    <visual>
+      <origin xyz="0 0 1" rpy="0 1.57 0"/>
+      <material name="grey" />
+      <geometry>
+        <box size="2 1 1" />
+      </geometry>
+    </visual>
+
+    <!-- Collision -->
+    <collision>
+      <origin xyz="0 0 1" rpy="0 1.57 0"/>
+      <geometry>
+        <box size="2 1 1" />
+      </geometry>
+    </collision>
+
+    <xacro:box_inertia m="2.0" x="2" y="1" z="1"/>
+
+  </link>
+
+   <joint name="joint7" type="revolute">
+        <parent link="joint6_link" />
+        <child link="joint7_link" />
+        <origin xyz="0 0 1" rpy="0 0 0" />
+        <axis xyz="1 0 0" />
+        <limit effort="1000.0" velocity="1.0" lower="-3.14" upper="3.14" />
+  </joint>
+
+
+
+
+  <link name="joint8_link">
+
+    <!-- Visual -->
+    <visual>
+      <origin xyz="0 0 0.5" rpy="0 1.57 0"/>
+      <material name="black" />
+      <geometry>
+        <box size="1 1 1" />
+      </geometry>
+    </visual>
+
+    <!-- Collision -->
+    <collision>
+      <origin xyz="0 0 0.5" rpy="0 1.57 0"/>
+      <geometry>
+        <box size="1 1 1" />
+      </geometry>
+    </collision>
+
+    <xacro:box_inertia m="2.0" x="1" y="1" z="1"/>
+
+  </link>
+
+  
+
+   <joint name="joint8" type="revolute">
+        <parent link="joint7_link" />
+        <child link="joint8_link" />
+        <origin xyz="0 0 2" rpy="0 0 0" />
+        <axis xyz="0 0 1" />
+        <limit effort="1000.0" velocity="1.0" lower="-3.14" upper="3.14" />
+  </joint>
+
+  <link name="joint9_link">
+
+   <visual>
+      <origin xyz="0 0 1" rpy="0 1.57 0"/>
+      <material name="grey" />
+      <geometry>
+        <box size="2 1 1" />
+      </geometry>
+    </visual>
+
+    <!-- Collision -->
+    <collision>
+      <origin xyz="0 0 1" rpy="0 1.57 0"/>
+      <geometry>
+        <box size="2 1 1" />
+      </geometry>
+    </collision>
+
+    <xacro:box_inertia m="2.0" x="2" y="1" z="1"/>
+
+  </link>
+
+  <joint name="joint9" type="revolute">
+        <parent link="joint8_link" />
+        <child link="joint9_link" />
+        <origin xyz="0 0 1" rpy="0 0 0" />
+        <axis xyz="1 0 0" />
+        <limit effort="1000.0" velocity="1.0" lower="-3.14" upper="3.14" />
+  </joint>
+
+
+
+
+</robot>
